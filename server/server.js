@@ -40,10 +40,8 @@ app.get("/todos/:id", (req,res) =>{
    if(!todo){
      return res.status(404).send();
    }
-   return res.send({todo});
- }, (err) =>{
-  return res.status(400).send();
- })
+   res.send({todo});
+ }). catch((err) => res.status(400).send());
   //validate id using isValid
     //404 - send back empty
 
