@@ -84,6 +84,20 @@ app.patch("/todos/:id",  (req, res) => {
   });
 });
 
+// POST /users
+app.post("/users", (req,res) => {
+  var body = _.pick(req.body,["email","password"]);
+  var newUser = new User(body);
+
+  newUser.save().then(() => {
+    return newUser.generateAuthToken();
+  }).then((token) => {
+    res.header("x-auth",token).send(newUser);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
+
 app.listen(process.env.PORT, ()=>{
   console.log(`Started on port ${process.env.PORT}`);
 });
